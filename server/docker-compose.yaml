@@ -1,0 +1,28 @@
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    #ports:
+    #  - 27018:27017
+
+    volumes:
+      - ./db:/data/db
+
+  app:
+    depends_on:
+      - mongodb
+    build: .
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 2025:2025
+    tty: true
+    volumes:
+      - ./db:/data/db
+      - ./:/mysites
+      - ./public:/mysites/public
+
+  
