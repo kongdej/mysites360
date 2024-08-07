@@ -1,19 +1,20 @@
 services:
   mongodb:
+    container_name: mongodb
     image: mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
     #ports:
-    #  - 27018:27017
-
+    #  - 27017:27017
     volumes:
-      - ./db:/data/db
+      - ./../db:/data/db
 
   app:
     depends_on:
       - mongodb
+    container_name: mysites
     build: .
     restart: unless-stopped
     env_file: ./.env
@@ -21,8 +22,9 @@ services:
       - 2025:2025
     tty: true
     volumes:
-      - ./db:/data/db
       - ./:/mysites
-      - ./public:/mysites/public
+      #- ./public:/mysites/public
+
+    
 
   
