@@ -23,7 +23,6 @@ services:
     tty: true
     volumes:
       - ./:/mysites
-      #- ./public:/mysites/public
 
     
 
