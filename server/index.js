@@ -10,7 +10,7 @@ let port = process.env.SERVER_PORT
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:2025', // Allow requests only from this origin
+  origin: 'http://localhost:9000', // Allow requests only from this origin
   methods: 'GET,POST',             // Allow only GET and POST requests
 }));
 
