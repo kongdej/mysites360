@@ -131,5 +131,5 @@ dist
 
 db/
 .DS_Store/
-server/.DS_Store
+
 
