@@ -9,10 +9,30 @@ require('dotenv').config({path:'./.env'})
 let port = process.env.SERVER_PORT
 const app = express();
 
-app.use(cors({
-  origin: 'http://localhost:9000', // Allow requests only from this origin
-  methods: 'GET,POST',             // Allow only GET and POST requests
-}));
+//app.use(cors({
+//  origin: 'http://localhost:9000', // Allow requests only from this origin
+//  methods: 'GET,POST',             // Allow only GET and POST requests
+//}));
+
+const allowedOrigins = [
+  'http://mysites.egat.co.th:2025',
+  'http://localhost:2025',
+  'http://localhost:9000'
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+      // Check if the origin is in the allowed origins list or if there is no origin (e.g., for non-browser requests)
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // Redirect HTTP to HTTPS
 if (process.env.HTTPS == "true") {
